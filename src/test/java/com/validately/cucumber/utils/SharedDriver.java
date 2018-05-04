@@ -27,8 +27,9 @@ public class SharedDriver {
 //            driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
 
             URL gridUrl = new URL("http://localhost:4444/wd/hub");
-            DesiredCapabilities desiredCapabilities = DesiredCapabilities.chrome();
-            driver = new RemoteWebDriver(gridUrl, desiredCapabilities);
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("disable-infobars");
+            driver = new RemoteWebDriver(gridUrl, options);
 
             initialized = true;
         }
