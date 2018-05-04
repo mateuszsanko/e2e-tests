@@ -3,6 +3,7 @@ package com.validately.cucumber.utils;
 import cucumber.api.java.Before;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -20,10 +21,14 @@ public class SharedDriver {
     public void setUp() throws Exception {
         if (!initialized) {
             // initialize the driver
-            DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-            capabilities.setBrowserName("chrome");
-            capabilities.setPlatform(Platform.LINUX);
-            driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+//            DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+//            capabilities.setBrowserName("chrome");
+//            capabilities.setPlatform(Platform.LINUX);
+//            driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+
+            URL gridUrl = new URL("http://localhost:4444/wd/hub");
+            DesiredCapabilities desiredCapabilities = DesiredCapabilities.chrome();
+            driver = new RemoteWebDriver(gridUrl, desiredCapabilities);
 
             initialized = true;
         }
