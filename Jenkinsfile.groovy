@@ -2,10 +2,14 @@
 
 node('master') {
     stage('Checkout') {
-        echo 'Code checkout'
+        checkout scm
     }
 
     stage('Run tests') {
-        echo 'Running tests'
+        withMaven(maven: 'Maven 3.5.3') {
+            dir('e2e-tests') {
+                sh 'mvn clean install'
+            }
+        }
     }
 }
