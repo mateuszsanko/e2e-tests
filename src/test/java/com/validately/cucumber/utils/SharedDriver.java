@@ -21,15 +21,10 @@ public class SharedDriver {
     public void setUp() throws Exception {
         if (!initialized) {
             // initialize the driver
-//            DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-//            capabilities.setBrowserName("chrome");
-//            capabilities.setPlatform(Platform.LINUX);
-//            driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
-
-            URL gridUrl = new URL("http://localhost:4444/wd/hub");
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("disable-infobars");
-            driver = new RemoteWebDriver(gridUrl, options);
+            DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+            capabilities.setBrowserName("chrome");
+            capabilities.setPlatform(Platform.LINUX);
+            driver = new RemoteWebDriver(new URL("http://192.168.8.101:4444/wd/hub"), capabilities);
 
             initialized = true;
         }
