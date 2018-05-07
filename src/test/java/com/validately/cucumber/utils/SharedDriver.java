@@ -24,7 +24,7 @@ public class SharedDriver {
             DesiredCapabilities capabilities = DesiredCapabilities.chrome();
             capabilities.setBrowserName("firefox");
             capabilities.setPlatform(Platform.LINUX);
-            driver = new RemoteWebDriver(new URL("http://192.168.8.101:4444/wd/hub"), capabilities);
+            driver = new RemoteWebDriver(new URL("http://172.17.0.3:4444/wd/hub"), capabilities);
 
             initialized = true;
         }
