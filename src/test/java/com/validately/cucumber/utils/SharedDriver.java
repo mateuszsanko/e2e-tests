@@ -25,7 +25,7 @@ public class SharedDriver {
             ChromeOptions opt = new ChromeOptions();
 //            capabilities.setBrowserName("chrome");
 //            capabilities.setPlatform(Platform.MAC);
-            driver = new RemoteWebDriver(new URL("http://0.0.0.0:4444/wd/hub"), opt);
+            driver = new RemoteWebDriver(new URL("http://zalenium:4444/wd/hub"), opt);
 
             initialized = true;
         }
