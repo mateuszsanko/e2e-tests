@@ -1,7 +1,6 @@
 package com.validately.cucumber;
 
 
-import com.validately.cucumber.utils.SharedDriver;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
@@ -21,17 +20,17 @@ import static org.junit.Assert.assertTrue;
 
 public class GoogleSearchScenario {
 
-    private SharedDriver sharedDriver;
+//    private SharedDriver sharedDriver;
     private WebDriver driver;
 
-    public GoogleSearchScenario(SharedDriver sharedDriver) {
-        this.sharedDriver = sharedDriver;
-    }
+//    public GoogleSearchScenario(SharedDriver sharedDriver) {
+//        this.sharedDriver = sharedDriver;
+//    }
 
-    @Before
-    public void setupTest() {
-        driver = sharedDriver.getDriver();
-    }
+//    @Before
+//    public void setupTest() {
+//        driver = sharedDriver.getDriver();
+//    }
 
     @After
     public void teardown() {
@@ -46,7 +45,7 @@ public class GoogleSearchScenario {
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         capabilities.setBrowserName("chrome");
         capabilities.setPlatform(Platform.LINUX);
-        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+        driver = new RemoteWebDriver(new URL("http://35.193.193.116:4444/wd/hub"), capabilities);
 		driver.get(page);
 	}
 

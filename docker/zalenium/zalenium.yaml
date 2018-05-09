@@ -70,7 +70,7 @@ metadata:
   name: zalenium
   namespace: zalenium
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
     - name: zalenium
       protocol: TCP
