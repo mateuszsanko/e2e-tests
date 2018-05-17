@@ -45,7 +45,7 @@ public class GoogleSearchScenario {
 	public void the_page_is_open(String page) throws MalformedURLException {
         ChromeOptions options = new ChromeOptions();
         options.setCapability("Platform", "Linux");
-		driver = new RemoteWebDriver(new URL("http://10.3.240.13:4444/wd/hub"), options);
+		driver = new RemoteWebDriver(new URL("http://35.232.241.130:4444/wd/hub"), options);
 		driver.get(page);
 	}
 
