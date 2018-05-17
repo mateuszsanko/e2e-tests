@@ -1,101 +1,56 @@
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: zalenium
-  generateName: zalenium
-  namespace: zalenium
-  labels:
-    app: zalenium
-spec:
-  replicas: 1
-  template:
+apiVersion: v1
+    kind: Pod
     metadata:
+      name: zalenium-test-15-lsg0v
+      generateName: zalenium-test-15-
       labels:
-        app: zalenium
-        zalenium: hub
+        app: zalenium-test
     spec:
-      securityContext:
-        fsGroup: 1000
-      serviceAccount: zalenium
-      containers:
-      - name: zalenium
-        image: dosel/zalenium
-        args:
-        - start
-        - '--desiredContainers'
-        - '2'
-        - '--screenWidth'
-        - '1440'
-        - '--screenHeight'
-        - '810'
-        - '--timeZone'
-        - Australia/Canberra
-        - '--seleniumImageName'
-        - 'elgalu/selenium:latest'
-        ports:
-        - containerPort: 4444
-          protocol: TCP
-        env:
-        - name: ZALENIUM_KUBERNETES_CPU_REQUEST
-          value: 250m
-        - name: ZALENIUM_KUBERNETES_CPU_LIMIT
-          value: 500m
-        - name: ZALENIUM_KUBERNETES_MEMORY_REQUEST
-          value: 1Gi
-        volumeMounts:
-        - name: zalenium-videos
-          mountPath: /home/seluser/videos
-        livenessProbe:
-          httpGet:
-            path: /grid/console
-            port: 4444
-          initialDelaySeconds: 30
-          timeoutSeconds: 2
-          periodSeconds: 3
-        readinessProbe:
-          httpGet:
-            path: /grid/console
-            port: 4444
-          initialDelaySeconds: 10
-          timeoutSeconds: 2
-          periodSeconds: 3
       volumes:
-      - name: zalenium-videos
-        persistentVolumeClaim:
-          claimName: zalenium-videos
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: zalenium
-  namespace: zalenium
-spec:
-  type: LoadBalancer
-  ports:
-    - name: zalenium
-      protocol: TCP
-      port: 4444
-      targetPort: 4444
-  selector:
-    zalenium: hub
----
-#apiVersion: extensions/v1beta1
-#kind: Ingress
-#metadata:
-#  name: zalenium
-#spec:
-#  backend:
-#    serviceName: zalenium
-#    servicePort: 4444
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: zalenium-videos
-  namespace: zalenium
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
+        - name: zalenium-videos
+          persistentVolumeClaim:
+            claimName: zalenium-test-videos
+        - name: zalenium-shared
+          persistentVolumeClaim:
+            claimName: zalenium-shared
+      containers:
+        - name: zalenium
+          image: >-
+            172.23.192.79:5000/delivery/zalenium@sha256:f9ac5f4d1dc78811b7b589f0cb16fd198c9c7e562eb149b8c6e60b0686bf150f
+          args:
+            - start
+            - '--desiredContainers'
+            - '2'
+            - '--screenWidth'
+            - '1440'
+            - '--screenHeight'
+            - '810'
+            - '--timeZone'
+            - Australia/Canberra
+            - '--seleniumImageName'
+            - '172.23.192.79:5000/delivery/selenium:latest'
+          ports:
+            - containerPort: 4444
+              protocol: TCP
+          env:
+            - name: ZALENIUM_KUBERNETES_CPU_REQUEST
+              value: 250m
+            - name: ZALENIUM_KUBERNETES_CPU_LIMIT
+              value: 500m
+            - name: ZALENIUM_KUBERNETES_MEMORY_REQUEST
+              value: 1Gi
+          resources: {}
+          volumeMounts:
+            - name: zalenium-videos
+              mountPath: /home/seluser/videos
+            - name: zalenium-shared
+              mountPath: /tmp/mounted
+          terminationMessagePath: /dev/termination-log
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 120
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        purpose: work
+      serviceAccountName: zalenium
+      serviceAccount: zalenium

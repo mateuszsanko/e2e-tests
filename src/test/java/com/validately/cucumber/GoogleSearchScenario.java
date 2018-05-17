@@ -10,6 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -42,10 +43,9 @@ public class GoogleSearchScenario {
 
 	@Given("^the page is open \"([^\"]*)\"$")
 	public void the_page_is_open(String page) throws MalformedURLException {
-        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-        capabilities.setBrowserName("chrome");
-        capabilities.setPlatform(Platform.LINUX);
-        driver = new RemoteWebDriver(new URL("http://35.193.193.116:4444/wd/hub"), capabilities);
+        ChromeOptions options = new ChromeOptions();
+        options.setCapability("Platform", "Linux");
+		driver = new RemoteWebDriver(new URL("http://35.193.193.116:4444/wd/hub"), options);
 		driver.get(page);
 	}
 
